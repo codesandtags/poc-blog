@@ -9,6 +9,7 @@ This is a Proof of Concept, about how to create microservices using NodeJS, Expr
 This project uses:
 
 - [x] Monorepo approach
+- [ ] Add logger in express
 
 ## Wish list
 

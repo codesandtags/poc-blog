@@ -1,15 +1,32 @@
-const express = require('express');
+const express = require("express");
+const bodyParser = require("body-parser");
+const { randomBytes } = require("crypto");
+
+const dotenv = require("dotenv");
+dotenv.config();
 
 const app = express();
+app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
+const posts = {};
 
-})
-
-app.post('/post', (req, res) => {
-
+app.get("/", (req, res) => {
+  res.send(posts);
 });
 
-app.listen(4000, () => {
-    console.log('Listening on 4000')
-})
+app.post("/posts", (req, res) => {
+  const id = randomBytes(4).toString("hex");
+  const { title } = req.body;
+
+  posts[id] = {
+    id,
+    title,
+  };
+
+  res.status(201).send(posts[id]);
+});
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => {
+  console.log(`Listening on ${PORT}`);
+});
