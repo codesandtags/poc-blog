@@ -3,12 +3,17 @@ const bodyParser = require("body-parser");
 const { randomBytes } = require("crypto");
 const cors = require("cors");
 
+const expressWinston = require("express-winston");
+const { winstonConfig, logger } = require("./winston-config");
+
 const dotenv = require("dotenv");
 dotenv.config();
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(expressWinston.logger(winstonConfig));
 
 const commentsByPostId = {};
 
@@ -30,5 +35,5 @@ app.post("/posts/:id/comments", (req, res) => {
 
 const PORT = process.env.PORT || 4001;
 app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
+  logger.info(`Listening on ${PORT}`);
 });

@@ -1,8 +1,12 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const { randomBytes } = require("crypto");
+const expressWinston = require("express-winston");
+const { winstonConfig, logger } = require("./winston-config");
+
 const cors = require("cors");
 
+const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -10,13 +14,15 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use(expressWinston.logger(winstonConfig));
+
 const posts = {};
 
 app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/posts", (req, res) => {
+app.post("/posts", async (req, res) => {
   const id = randomBytes(4).toString("hex");
   const { title } = req.body;
 
@@ -25,10 +31,14 @@ app.post("/posts", (req, res) => {
     title,
   };
 
+  await axios.post(`${process.env.EVENTS_API}/events`, {
+    type: "PostCreated",
+    data: { id, title },
+  });
   res.status(201).send(posts[id]);
 });
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
-  console.log(`Listening on ${PORT}`);
+  logger.info(`Listening on ${PORT}`);
 });
