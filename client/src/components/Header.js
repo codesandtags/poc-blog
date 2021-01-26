@@ -2,43 +2,26 @@ import React from "react";
 
 export default () => {
   return (
-    <div className="container">
+    <div
+      className="container py-2"
+      style={{
+        backgroundImage:
+          'url("https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1267&q=40")',
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+        backgroundRepeat: "no-repeat",
+        height: "400px",
+      }}
+    >
       <header className="blog-header py-3">
         <div className="row flex-nowrap justify-content-between align-items-center">
-          <div className="col-3 pt-1">
-            <a className="link-secondary" href="#">
-              Subscribe
-            </a>
-          </div>
-          <div className="col-6 text-center">
-            <a className="blog-header-logo text-dark" href="#">
+          <div className="col-2 pt-1"></div>
+          <div className="col-8 text-center">
+            <a className="blog-header-logo" href="#">
               The Travel Blog
             </a>
           </div>
-          <div className="col-3 d-flex justify-content-end align-items-center">
-            <a className="link-secondary" href="#" aria-label="Search">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="mx-3"
-                role="img"
-                viewBox="0 0 24 24"
-              >
-                <title>Search</title>
-                <circle cx="10.5" cy="10.5" r="7.5"></circle>
-                <path d="M21 21l-5.2-5.2"></path>
-              </svg>
-            </a>
-            <a className="btn btn-sm btn-outline-secondary" href="#">
-              Sign up
-            </a>
-          </div>
+          <div className="col-2 d-flex justify-content-end align-items-center"></div>
         </div>
       </header>
     </div>

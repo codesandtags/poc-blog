@@ -38,7 +38,8 @@ app.post("/posts", async (req, res) => {
 });
 
 app.post("/events", (req, res) => {
-  logger.info(`Recieved event: [${req.body.type}]`);
+  const { type } = req.body;
+  logger.warn(`Recieved event: [${type}]`);
 
   res.send({});
 });

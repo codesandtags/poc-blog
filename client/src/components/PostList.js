@@ -1,21 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostItem from "./PostItem";
-import axios from "axios";
 
-export default () => {
-  const [posts, setPosts] = useState({});
-  const fetchPosts = async () => {
-    const res = await axios.get("http://localhost:4000/posts");
-
-    setPosts(res.data);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
+export default ({ posts, fetchPosts }) => {
   const renderedPost = Object.values(posts).map((post) => {
-    return <PostItem post={post} key={post.id} />;
+    return <PostItem post={post} key={post.id} fetchPosts={fetchPosts} />;
   });
 
   return (

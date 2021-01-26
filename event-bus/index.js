@@ -15,9 +15,11 @@ app.use(expressWinston.logger(winstonConfig));
 app.post("/events", (req, res) => {
   const event = req.body;
 
+  // Broadcast to all APIs subscribed
   axios.post(`${process.env.POSTS_API}/events`, event);
   axios.post(`${process.env.COMMENTS_API}/events`, event);
   axios.post(`${process.env.QUERY_API}/events`, event);
+  axios.post(`${process.env.MODERATION_API}/events`, event);
 
   res.send({ status: "OK" });
 });

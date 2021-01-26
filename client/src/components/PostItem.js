@@ -2,7 +2,7 @@ import React from "react";
 import CommentList from "./CommentList";
 import CommentsCreate from "./CommentsCreate";
 
-export default ({ post }) => {
+export default ({ post, fetchPosts }) => {
   const topics = ["Nature", "Adventures", "Cities", "Beach", "Food"];
   const topic = topics[Math.floor(Math.random() * topics.length)];
 
@@ -22,18 +22,8 @@ export default ({ post }) => {
             Continue reading
           </a>
 
-          <CommentsCreate postId={post.id} />
-          <CommentList postId={post.id} />
-        </div>
-        <div className="col-auto d-none d-lg-block h-md-300">
-          <div
-            className="p-5 text-center bg-image"
-            style={{
-              backgroundImage: 'url("https://picsum.photos/200/300")',
-              height: "300px",
-              width: "200px",
-            }}
-          ></div>
+          <CommentsCreate postId={post.id} fetchPosts={fetchPosts} />
+          <CommentList comments={post.comments} />
         </div>
       </div>
     </div>
