@@ -9,7 +9,7 @@ This is a Proof of Concept, about how to create microservices using NodeJS, Expr
 This project uses:
 
 - [x] Monorepo approach
-- [ ] Add logger in express with `Winston`
+- [x] Add logger in express with `Winston`
 - [x] Manage environment variables with `dotenv` dependency.
 - [ ] Add swagger open API v3 definitions.
 - [ ] Add postman collections
@@ -26,6 +26,7 @@ This project uses:
 | :------------ | :--: | :------------------------------------------------------------------------------- | :----------- |
 | Post          | 4000 | Represent the microservice to create and list the posts                          | Express      |
 | Comments      | 4001 | Represents the microservice to create and list the comments related to the posts | Express      |
+| Query         | 4002 | Represents the microservice to collect                                           | Express      |
 
 | Web Clients | Port | Description                                            | Technologies |
 | :---------- | :--: | :----------------------------------------------------- | :----------- |

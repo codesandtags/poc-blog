@@ -1,16 +1,20 @@
 const winston = require("winston"); // for transports.Console
 
 const myFormat = winston.format.printf(
-  ({ level, message, timestamp, ...meta }) => {
-    return `${timestamp} ${level}: ${message} ${JSON.stringify(meta)}`;
+  ({ level, label, message, timestamp, meta }) => {
+    const metaFormatted = meta !== undefined ? `\n${JSON.stringify(meta)}` : "";
+
+    return `${timestamp} ${label} ${level}: ${message} ${metaFormatted}`;
   }
 );
 
 const loggerFormat = winston.format.combine(
-  winston.format.colorize({ all: true }),
-  winston.format.timestamp(),
+  winston.format.json(),
+  winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.align(),
-  myFormat
+  winston.format.label({ label: "[event-bus]" }),
+  myFormat,
+  winston.format.colorize({ all: true })
 );
 
 const logger = winston.createLogger({
@@ -49,6 +53,7 @@ const winstonConfig = {
   expressFormat: true, // Use the default Express/morgan request formatting. Enabling this will override any msg if true. Will only output colors with colorize set to true
   colorize: true, // Color the text and status code, using the Express/morgan color palette (text: gray, status: default green, 3XX cyan, 4XX yellow, 5XX red).
   level: customLevel,
+  bodyWhitelist: ["data"],
 };
 
 module.exports = {

@@ -6,6 +6,7 @@ const cors = require("cors");
 const expressWinston = require("express-winston");
 const { winstonConfig, logger } = require("./winston-config");
 
+const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -21,7 +22,7 @@ app.get("/posts/:id/comments", (req, res) => {
   res.send(commentsByPostId[req.params.id] || []);
 });
 
-app.post("/posts/:id/comments", (req, res) => {
+app.post("/posts/:id/comments", async (req, res) => {
   const commentId = randomBytes(4).toString("hex");
   const { comment } = req.body;
 
@@ -30,7 +31,22 @@ app.post("/posts/:id/comments", (req, res) => {
 
   commentsByPostId[req.params.id] = comments;
 
+  await axios.post(`${process.env.EVENTS_API}/events`, {
+    type: "CommentCreated",
+    data: {
+      id: commentId,
+      comment,
+      postId: req.params.id,
+    },
+  });
+
   res.status(201).send(comments);
+});
+
+app.post("/events", (req, res) => {
+  logger.info(`Recieved event: [${req.body.type}]`);
+
+  res.send({});
 });
 
 const PORT = process.env.PORT || 4001;

@@ -12,7 +12,7 @@ const loggerFormat = winston.format.combine(
   winston.format.json(),
   winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   winston.format.align(),
-  winston.format.label({ label: "[post-api]" }),
+  winston.format.label({ label: "[query-api]" }),
   myFormat,
   winston.format.colorize({ all: true })
 );

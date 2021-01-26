@@ -1,11 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const { randomBytes } = require("crypto");
 const expressWinston = require("express-winston");
 const { winstonConfig, logger } = require("./winston-config");
 
 const cors = require("cors");
-const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -21,29 +19,32 @@ app.get("/posts", (req, res) => {
   res.send(posts);
 });
 
-app.post("/posts", async (req, res) => {
-  const id = randomBytes(4).toString("hex");
-  const { title } = req.body;
-
-  posts[id] = {
-    id,
-    title,
-  };
-
-  await axios.post(`${process.env.EVENTS_API}/events`, {
-    type: "PostCreated",
-    data: { id, title },
-  });
-  res.status(201).send(posts[id]);
-});
-
 app.post("/events", (req, res) => {
-  logger.info(`Recieved event: [${req.body.type}]`);
+  const { type, data } = req.body;
+
+  logger.warn(type);
+  logger.warn(data);
+
+  if (type === "PostCreated") {
+    const { id, title } = data;
+    posts[id] = {
+      id,
+      title,
+      comments: [],
+    };
+  }
+
+  if (type === "CommentCreated") {
+    const { id, comment, postId } = data;
+
+    const post = posts[postId];
+    post.comments.push({ id, comment });
+  }
 
   res.send({});
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 4002;
 app.listen(PORT, () => {
   logger.info(`Listening on ${PORT}`);
 });
