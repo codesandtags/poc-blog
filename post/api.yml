@@ -1,0 +1,73 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Posts
+  description: This is the Post API definition
+  contact:
+    email: codesandtags@gmail.com
+servers:
+  - url: "http://localhost:4000"
+paths:
+  /posts:
+    post:
+      summary: "Creates a new post"
+      tags:
+        - Posts
+      responses:
+        "201":
+          description: "Response the post created with the Id"
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Post"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    get:
+      summary: "List of the post created"
+      tags:
+        - Posts
+      responses:
+        "200":
+          description: "List of posts created"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/Post"
+
+components:
+  schemas:
+    Post:
+      type: object
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: string
+          format: int64
+        title:
+          type: string
+        tag:
+          type: string
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
