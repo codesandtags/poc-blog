@@ -2,6 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const expressWinston = require("express-winston");
 const { winstonConfig, logger } = require("./winston-config");
+const axios = require("axios");
+const { handleEvent } = require("./src/handler");
 
 const cors = require("cors");
 const dotenv = require("dotenv");
@@ -15,6 +17,20 @@ app.use(expressWinston.logger(winstonConfig));
 
 const posts = {};
 
+const fetchEvents = async () => {
+  const response = await axios.get(`${process.env.EVENTS_API}/events`);
+  const events = response.data || [];
+
+  logger.info("The events are: ");
+  logger.warn(JSON.stringify(events));
+
+  for (const event of events) {
+    const { type, data } = event;
+
+    handleEvent(type, data, posts);
+  }
+};
+
 app.get("/posts", (req, res) => {
   res.send(posts);
 });
@@ -23,33 +39,7 @@ app.post("/events", (req, res) => {
   const { type, data } = req.body;
   logger.warn(`Recieved event: [${type}]`);
 
-  if (type === "PostCreated") {
-    const { id, title } = data;
-
-    posts[id] = {
-      id,
-      title,
-      comments: [],
-    };
-  }
-
-  if (type === "CommentCreated") {
-    const { id, comment, postId, status } = data;
-    const post = posts[postId];
-    post.comments.push({ id, comment, status });
-  }
-
-  if (type === "CommentUpdated") {
-    const { id, comment, postId, status } = data;
-
-    const post = posts[postId];
-    const commentFound = post.comments.find((c) => c.id === id);
-
-    if (commentFound) {
-      commentFound.status = status;
-      commentFound.comment = comment;
-    }
-  }
+  handleEvent(type, data, posts);
 
   res.send({});
 });
@@ -57,4 +47,6 @@ app.post("/events", (req, res) => {
 const PORT = process.env.PORT || 4002;
 app.listen(PORT, () => {
   logger.info(`Listening on ${PORT}`);
+
+  fetchEvents();
 });

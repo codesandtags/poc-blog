@@ -12,8 +12,13 @@ app.use(bodyParser.json());
 
 app.use(expressWinston.logger(winstonConfig));
 
+const events = [];
+
 app.post("/events", (req, res) => {
   const event = req.body;
+  logger.warn(`Recieved event: [${event.type}]`);
+
+  events.push(event);
 
   // Broadcast to all APIs subscribed
   axios.post(`${process.env.POSTS_API}/events`, event);
@@ -22,6 +27,10 @@ app.post("/events", (req, res) => {
   axios.post(`${process.env.MODERATION_API}/events`, event);
 
   res.send({ status: "OK" });
+});
+
+app.get("/events", (req, res) => {
+  res.send(events);
 });
 
 const PORT = process.env.PORT || 4005;
