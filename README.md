@@ -17,7 +17,7 @@ This project uses:
 ## Wish list
 
 - [ ] Add Husky pre-commit configuration
-- [ ] Add Docker or Kubernate to manage the Microservices in containers
+- [x] Add Docker or Kubernate to manage the Microservices in containers
 - [ ] Add a load balancer with nginx to scale up or scale down the number of microservices
 
 ## Architecture
@@ -30,6 +30,7 @@ This project uses:
 | Comments      | 4001 | Represents the microservice to create and list the comments related to the posts | Express      |
 | Query         | 4002 | Represents the microservice to collect                                           | Express      |
 | Moderation    | 4003 | Represents the microservice to moderate the comments created                     | Express      |
+| Event Bus     | 4005 | Handle events and propage them between microservices                             | Express      |
 
 | Web Clients | Port | Description                                            | Technologies |
 | :---------- | :--: | :----------------------------------------------------- | :----------- |
