@@ -20,15 +20,19 @@ app.post("/events", async (req, res) => {
   if (type === "CommentCreated") {
     const status = data.comment.includes("orange") ? "rejected" : "approved";
 
-    await axios.post(`${process.env.EVENTS_API}/events`, {
-      type: "CommentModerated",
-      data: {
-        id: data.id,
-        postId: data.postId,
-        content: data.content,
-        status,
-      },
-    });
+    await axios
+      .post(`${process.env.EVENTS_API}/events`, {
+        type: "CommentModerated",
+        data: {
+          id: data.id,
+          postId: data.postId,
+          content: data.content,
+          status,
+        },
+      })
+      .catch((err) => {
+        logger.error(err);
+      });
   }
 
   res.send({ status: "OK" });

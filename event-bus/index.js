@@ -14,6 +14,10 @@ app.use(expressWinston.logger(winstonConfig));
 
 const events = [];
 
+const handleError = (err) => {
+  logger.error(err);
+};
+
 app.post("/events", (req, res) => {
   const event = req.body;
   logger.warn(`Recieved event: [${event.type}]`);
@@ -21,10 +25,10 @@ app.post("/events", (req, res) => {
   events.push(event);
 
   // Broadcast to all APIs subscribed
-  axios.post(`${process.env.POSTS_API}/events`, event);
-  axios.post(`${process.env.COMMENTS_API}/events`, event);
-  axios.post(`${process.env.QUERY_API}/events`, event);
-  axios.post(`${process.env.MODERATION_API}/events`, event);
+  axios.post(`${process.env.POSTS_API}/events`, event).catch(handleError);
+  axios.post(`${process.env.COMMENTS_API}/events`, event).catch(handleError);
+  axios.post(`${process.env.QUERY_API}/events`, event).catch(handleError);
+  axios.post(`${process.env.MODERATION_API}/events`, event).catch(handleError);
 
   res.send({ status: "OK" });
 });

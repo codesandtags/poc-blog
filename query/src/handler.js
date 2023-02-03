@@ -19,7 +19,7 @@ const handleEvent = (type, data, posts) => {
     const { id, comment, postId, status } = data;
 
     const post = posts[postId];
-    const commentFound = post.comments.find((c) => c.id === id);
+    const commentFound = post.comments.find((comment) => comment.id === id);
 
     if (commentFound) {
       commentFound.status = status;

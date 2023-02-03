@@ -30,10 +30,15 @@ app.post("/posts", async (req, res) => {
     title,
   };
 
-  await axios.post(`${process.env.EVENTS_API}/events`, {
-    type: "PostCreated",
-    data: { id, title },
-  });
+  await axios
+    .post(`${process.env.EVENTS_API}/events`, {
+      type: "PostCreated",
+      data: { id, title },
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
+
   res.status(201).send(posts[id]);
 });
 

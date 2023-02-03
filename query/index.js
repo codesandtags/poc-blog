@@ -18,7 +18,9 @@ app.use(expressWinston.logger(winstonConfig));
 const posts = {};
 
 const fetchEvents = async () => {
-  const response = await axios.get(`${process.env.EVENTS_API}/events`);
+  const response = await axios
+    .get(`${process.env.EVENTS_API}/events`)
+    .catch((err) => logger.error(err));
   const events = response.data || [];
 
   logger.info("The events are: ");

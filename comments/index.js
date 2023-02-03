@@ -35,15 +35,19 @@ app.post("/posts/:id/comments", async (req, res) => {
 
   commentsByPostId[req.params.id] = comments;
 
-  await axios.post(`${process.env.EVENTS_API}/events`, {
-    type: "CommentCreated",
-    data: {
-      id: commentId,
-      comment,
-      postId: req.params.id,
-      status: "pending",
-    },
-  });
+  await axios
+    .post(`${process.env.EVENTS_API}/events`, {
+      type: "CommentCreated",
+      data: {
+        id: commentId,
+        comment,
+        postId: req.params.id,
+        status: "pending",
+      },
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 
   res.status(201).send(comments);
 });
@@ -61,13 +65,15 @@ app.post("/events", async (req, res) => {
     });
     comment.status = status;
 
-    await axios.post(`${process.env.EVENTS_API}/events`, {
-      type: "CommentUpdated",
-      data: {
-        postId: postId,
-        ...comment,
-      },
-    });
+    await axios
+      .post(`${process.env.EVENTS_API}/events`, {
+        type: "CommentUpdated",
+        data: {
+          postId: postId,
+          ...comment,
+        },
+      })
+      .catch((err) => logger.error(err));
   }
 
   res.send({});

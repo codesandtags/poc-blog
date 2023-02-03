@@ -24,10 +24,9 @@ export default () => {
     <div>
       <Header />
       <main className="container">
+        <PostCreate fetchPosts={fetchPosts} />
         <hr />
         <PostList posts={posts} fetchPosts={fetchPosts} />
-        <hr />
-        <PostCreate fetchPosts={fetchPosts} />
       </main>
     </div>
   );
