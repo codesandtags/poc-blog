@@ -7,11 +7,11 @@ export default ({ posts, fetchPosts }) => {
   });
 
   return (
-    <div>
-      <div className="row mb-2">
-        <h2>The lastest posts</h2>
+    <div className="my-4">
+      <div className="flex">
+        <h2 className="text-2xl font-bold">The lastest posts</h2>
       </div>
-      <div className="row mb-2">{renderedPost}</div>
+      <div className="py-4 flex flex-col md:flex-row gap-4">{renderedPost}</div>
     </div>
   );
 };

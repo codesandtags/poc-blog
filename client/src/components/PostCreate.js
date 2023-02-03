@@ -16,17 +16,19 @@ export default ({ fetchPosts }) => {
   };
 
   return (
-    <div className="mt-3 mb-3">
+    <div className="w-full md:w-1/2 my-8">
       <form onSubmit={onSubmit}>
         <div className="mb-3">
-          <label className="form-label">Add a post</label>
+          <label className="form-label text-xl font-bold">Add a post</label>
           <input
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             className="form-control"
           ></input>
         </div>
-        <button className="btn btn-primary">Submit</button>
+        <button className="px-4 py-2 font-semibold text-sm bg-orange-700 text-white rounded-full shadow-sm">
+          Submit
+        </button>
       </form>
     </div>
   );
