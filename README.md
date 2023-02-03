@@ -16,6 +16,7 @@ This project uses:
 
 ## Wish list
 
+- [x] Add prettier and eslint
 - [ ] Add Husky pre-commit configuration
 - [x] Add Docker or Kubernate to manage the Microservices in containers
 - [ ] Add a load balancer with nginx to scale up or scale down the number of microservices
@@ -38,10 +39,44 @@ This project uses:
 
 ## Technologies
 
-- [ ] React 17.x / Create-react-app
-- [ ] Express
+- [x] React 18.x / Create-react-app
+- [x] Express
+- [x] Axios
+- [x] Wiston
 
 ## Steps
+
+## Runing images with Docker
+
+For each microservice, you can run the next command
+
+```
+docker build -t codesandtags/${MICROSERVICE_NAME}.
+
+# Example in posts
+
+docker build -t codesandtags/posts
+```
+
+If you prefer you can run build all docker images by running the next command.
+
+```
+sh build-containers.sh
+```
+
+## Runing images with Docker Compose
+
+To run this project using Docker compose, only run the next command:
+
+```
+docker-compose up
+```
+
+## Runing project with Kubernates
+
+## Runing project on AWS
+
+## Runing project on GPC
 
 ## Demo
 

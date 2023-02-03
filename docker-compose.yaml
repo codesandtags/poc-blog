@@ -1,0 +1,51 @@
+services:
+  front-end:
+    container_name: "client"
+    image: codesandtags/client
+    ports:
+      - "80:3000"
+
+  post:
+    container_name: "posts"
+    image: codesandtags/posts
+    ports:
+      - "4000:4000"
+    environment:
+      EVENTS_API: "http://event-bus:4005"
+
+  comments:
+    container_name: "comments"
+    image: codesandtags/comments
+    ports:
+      - "4001:4001"
+    environment:
+      EVENTS_API: "http://event-bus:4005"
+
+  query:
+    container_name: "query"
+    image: codesandtags/query
+    ports:
+      - "4002:4002"
+    environment:
+      EVENTS_API: "http://event-bus:4005"
+    depends_on:
+      - event-bus
+
+  moderation:
+    container_name: "moderation"
+    image: codesandtags/moderation
+    ports:
+      - "4003:4003"
+    environment:
+      EVENTS_API: "http://event-bus:4005"
+
+  event-bus:
+    container_name: "event-bus"
+    image: codesandtags/event-bus
+    ports:
+      - "4005:4005"
+    environment:
+      POST_API: "http://posts:4000"
+      COMMENTS_API: "http://comments:4001"
+      QUERY_API: "http://query:4002"
+      MODERATION_API: "http://moderation:4003"
