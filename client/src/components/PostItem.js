@@ -4,7 +4,6 @@ import CommentsCreate from "./CommentsCreate";
 
 export default ({ post, fetchPosts }) => {
   const topics = ["Nature", "Adventures", "Cities", "Beach", "Food"];
-  const topic = topics[Math.floor(Math.random() * topics.length)];
 
   return (
     <div class="max-w p-6 bg-white border border-gray-200 rounded-lg shadow">
