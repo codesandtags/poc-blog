@@ -14,13 +14,14 @@ spec:
     spec:
       containers:
         - name: posts
-          image: codesandtags/posts
+          image: codesandtags/posts:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: posts-clusterip-service
 spec:
+  type: ClusterIP
   selector:
     app: posts
   ports:

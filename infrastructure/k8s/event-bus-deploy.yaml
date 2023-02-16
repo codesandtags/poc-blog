@@ -14,13 +14,14 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: codesandtags/event-bus
+          image: codesandtags/event-bus:latest
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: event-bus-service
 spec:
+  type: ClusterIP
   selector:
     app: event-bus
   ports:
