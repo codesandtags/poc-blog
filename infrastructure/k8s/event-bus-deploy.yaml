@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: event-bus-deploy
+  name: blog-event-bus-deploy
 spec:
   replicas: 1
   selector:
@@ -15,6 +15,17 @@ spec:
       containers:
         - name: event-bus
           image: codesandtags/event-bus:latest
+          env:
+            - name: PORT
+              value: "4005"
+            - name: POSTS_API
+              value: http://posts-service:4000
+            - name: COMMENTS_API
+              value: http://comments-service:4001
+            - name: QUERY_API
+              value: http://query-service:4002
+            - name: MODERATION_API
+              value: http://moderation-service:4003
 ---
 apiVersion: v1
 kind: Service

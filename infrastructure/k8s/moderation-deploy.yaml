@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: moderation-deploy
+  name: blog-moderation-deploy
 spec:
   replicas: 1
   selector:
@@ -14,12 +14,17 @@ spec:
     spec:
       containers:
         - name: moderation
-          image: codesandtags/moderation
+          image: codesandtags/moderation:latest
+          env:
+            - name: PORT
+              value: "4003"
+            - name: EVENTS_API
+              value: http://event-bus-service:4005
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: moderation-clusterip-service
+  name: moderation-service
 spec:
   selector:
     app: moderation

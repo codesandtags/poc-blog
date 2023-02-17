@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: comments-deploy
+  name: blog-comments-deploy
 spec:
   replicas: 1
   selector:
@@ -14,12 +14,17 @@ spec:
     spec:
       containers:
         - name: comments
-          image: codesandtags/comments
+          image: codesandtags/comments:latest
+          env:
+            - name: PORT
+              value: "4001"
+            - name: EVENTS_API
+              value: http://event-bus-service:4005
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: comments-clusterip-service
+  name: comments-service
 spec:
   selector:
     app: comments
