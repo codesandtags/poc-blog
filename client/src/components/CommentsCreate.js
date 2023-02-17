@@ -7,8 +7,8 @@ export default ({ postId, fetchPosts }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
-      comment,
+    await axios.post(`http://myblog.com/posts/${postId}/comments`, {
+      comment
     });
 
     setComment("");

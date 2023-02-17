@@ -7,8 +7,8 @@ export default ({ fetchPosts }) => {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await axios.post("http://localhost:4000/posts", {
-      title,
+    await axios.post("http://myblog.com/posts", {
+      title
     });
 
     setTitle("");
