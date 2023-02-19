@@ -10,12 +10,12 @@ export default () => {
         backgroundSize: "cover",
         backgroundPosition: "center center",
         backgroundRepeat: "no-repeat",
-        height: "400px",
+        height: "400px"
       }}
     >
       <header className="">
         <div className="text-5xl font-bold text-green-300 shadow-lg shadow-cyan-500">
-          <h1>The Travel Blog</h1>
+          <h1>Churritos Blog</h1>
         </div>
       </header>
     </div>

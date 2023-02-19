@@ -1,0 +1,64 @@
+apiVersion: skaffold/v4beta2
+kind: Config
+metadata:
+  name: poc-blog
+build:
+  artifacts:
+    - image: codesandtags/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+    - image: codesandtags/comments
+      context: comments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: codesandtags/event-bus
+      context: event-bus
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: codesandtags/moderation
+      context: moderation
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: codesandtags/posts
+      context: posts
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+    - image: codesandtags/query
+      context: query
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
+manifests:
+  rawYaml:
+    - infrastructure/k8s/client-deploy.yaml
+    - infrastructure/k8s/comments-deploy.yaml
+    - infrastructure/k8s/event-bus-deploy.yaml
+    - infrastructure/k8s/ingress-service.yaml
+    - infrastructure/k8s/moderation-deploy.yaml
+    - infrastructure/k8s/posts-deploy.yaml
+    - infrastructure/k8s/posts-service.yaml
+    - infrastructure/k8s/query-deploy.yaml
